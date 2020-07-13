@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 
+const names = () => {
+  const x = document.getElementById("x").textContent;
+  const o = document.getElementById("0").textContent;
+  if(x != null && o != null ){
+    
+    return {nameX: x, nameO: o};
+  } else {
+    alert('You must enter a name.');
+  }
+}
 
 class Inputs extends Component{
-
-  
-
   render(){
     return(
       <form className="mx-auto" style={{width: '400px'}}>
@@ -23,22 +30,10 @@ class Inputs extends Component{
         </div>
         {/* <input className="my-2 btn btn-secondary" type="submit" value="Submit" /> */}
         
-        <NavLink to="/board" className="my-2 btn btn-secondary"><button onClick={this.names()} className="my-2 btn btn-secondary">Submit</button></NavLink>
+        <NavLink to="/board" className="my-2 btn btn-secondary"><button onClick={names()} className="my-2 btn btn-secondary">Submit</button></NavLink>
       </form>
     )
   }
-
-  names(){
-    const x = document.getElementById("x").textContent;
-    const o = document.getElementById("0").textContent;
-    if(x != null && o != null ){
-      
-      return {nameX: x, nameO: o};
-    } else {
-      alert('You must enter a name.');
-    }
-  }
-
 }
 
 export default Inputs;
