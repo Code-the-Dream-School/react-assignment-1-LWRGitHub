@@ -1,41 +1,45 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
+import {Consumer} from './Context';
 
+const Inputs = () => {
 
+  const playerX = React.createRef();
+  const playerO = React.createRef();
 
-class Inputs extends Component{
+  return(
+    <Consumer>
+    {context => {
+      const handleSubmit = (e) => {
+          e.preventDefault();
+          context.actions.addPlayer(playerX.current.value);
+          context.actions.addPlayer(playerO.current.value);
+          e.currentTarget.remove();
+      }
 
-  names() {
-    const x = document.getElementById("x").value;
-    const o = document.getElementById("0").value;
-    if(x != null && o != null ){
-      return {nameX: x, nameO: o};
-    } else {
-      alert('You must enter a name.');
-    }
-  }
-
-  render(){
-    return(
-      <form className="mx-auto" style={{width: '400px'}}>
-        <div className="row">
-          <div className="col">
-            <label for="x">Name X</label>
-            <br />
-            <input id="x" placeholder="Name"></input>
+      return (
+        <form className="mx-auto" style={{width: '400px'}} onSubmit={handleSubmit}>
+          <div className="row">
+              <input 
+                placeholder="X Name"
+                type="text"
+                ref={playerX} 
+              />
+              <input 
+                placeholder="O Name"
+                type="text"
+                ref={playerO}
+              />
+            <input 
+              type="submit"
+              value="Add Player"
+            />
           </div>
-          <div className="col">
-            <label for="o">Name O</label>
-            <br />
-            <input id="o" placeholder="Name"></input>
-          </div>
-        </div>
-        {/* <input className="my-2 btn btn-secondary" type="submit" value="Submit" /> */}
-        
-        <NavLink to="/board" className="my-2 btn btn-secondary"><button onClick={this.names} className="my-2 btn btn-secondary">Submit</button></NavLink>
-      </form>
-    )
-  }
+        </form>
+      );
+    }}
+    </Consumer>
+  );
 }
 
 export default Inputs;

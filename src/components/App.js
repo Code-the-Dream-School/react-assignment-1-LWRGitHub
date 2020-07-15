@@ -9,7 +9,7 @@ import {
 import Wellcome from "./Wellcome";
 import Header from './Header';
 import Inputs from './Inputs';
-
+import Board from './Board';
 
 class Game extends Component {
 
@@ -21,6 +21,7 @@ class Game extends Component {
           <Switch>
             <Route path="/welcome" component={Wellcome} />
             <Route path="/inputs" component={Inputs} />
+            <Route path="/board" component={Board} />
             <Route component={Wellcome} />
           </Switch>
         </div>
