@@ -5,7 +5,7 @@ import {Consumer} from './Context';
 function Square(props){
   return (
     <button className="square" onClick={() => { props.onClickAction(); }}>
-      {props.value}
+      <img className='square' src={props.value} />
     </button>
   );
 }
@@ -31,7 +31,7 @@ class Board extends React.Component {
     if (calculateWinner(updatingSquares) || updatingSquares[i]) {
       return;
     }
-    updatingSquares[i] = this.state.xIsNext ? "X" : "O";
+    updatingSquares[i] = this.state.xIsNext ? "images/0.png" : "images/1.png";
     this.setState({
       squares: updatingSquares,
       xIsNext: !this.state.xIsNext
@@ -39,7 +39,7 @@ class Board extends React.Component {
   }
 
   render() {
-    const winner = calculateWinner(this.state.squares);
+    const winner = calculateWinner(this.state.squares, this.state.xIsNext);
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
@@ -48,34 +48,44 @@ class Board extends React.Component {
     }
 
     return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
+        <div>
+          
+          <div style={{width: '250px'}} className="mx-auto status">
+            <div className="status">{status}</div>
+            <div className="board-row">
+              {this.renderSquare(0)}
+              {this.renderSquare(1)}
+              {this.renderSquare(2)}
+            </div>
+            <div className="board-row">
+              {this.renderSquare(3)}
+              {this.renderSquare(4)}
+              {this.renderSquare(5)}
+            </div>
+            <div className="board-row">
+              {this.renderSquare(6)}
+              {this.renderSquare(7)}
+              {this.renderSquare(8)}
+            </div>
+          </div>
+          
         </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
     );
   }
 }
 
-class Game extends Component {
-
-  render(){
+const Game = (props) => {
       return(
-        // <Consumer>
-          <div className="game">
+      // <Consumer>
+        <div className="game">
+          <div style={{float:'left'}}>
+            <img className='squareIcon' src='images/1.png' alt='image of X' />
+            <span>{props.players[0].name}</span>
+          </div>
+          <div style={{float:'right'}}>
+            <img className='squareIcon' src='images/0.png' alt='image of O' />
+            <span>{props.players[1].name}</span>
+          </div>
           <div className="game-board">
             <Board />
           </div>
@@ -86,10 +96,10 @@ class Game extends Component {
         </div>
       // </Consumer>
       );
-  }
+
 }
 
-function calculateWinner(squares) {
+function calculateWinner(squares, whosTurn) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -103,7 +113,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return whosTurn ? 'true' : 'false';
     }
   }
   return null;

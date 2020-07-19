@@ -12,6 +12,7 @@ const Inputs = () => {
   return(
     <Consumer>
     {context => {
+      let players = context.players;
       const handleSubmit = (e) => {
           e.preventDefault();
           const plyX = playerX.current.value;
@@ -50,7 +51,7 @@ const Inputs = () => {
             </div>
           </form>
           <div id='board' style={{visibility:visibility}}>
-            <Game />
+            <Game players={players}/>
           </div>
         </div>
       );
