@@ -1,33 +1,33 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import {Consumer} from './Context';
-import Board from './Board';
+import Game from './Game';
 
 const Inputs = () => {
 
   const playerX = React.createRef();
   const playerO = React.createRef();
+  let visibility = "hidden"
 
   return(
     <Consumer>
     {context => {
       const handleSubmit = (e) => {
           e.preventDefault();
-          context.actions.addPlayer(playerX.current.value);
-          context.actions.addPlayer(playerO.current.value);
-          e.currentTarget.remove();
-          document.getElementById('board').style.visibility = "visible";
-      }
-      const hidedBoard = (e) => {
-        document.getElementById('board').style.visibility = "hidden";
+          const plyX = playerX.current.value;
+          const plyO = playerO.current.value;
+          if(plyX && plyO){
+            context.actions.addPlayer(plyX);
+            context.actions.addPlayer(plyO);
+            e.currentTarget.remove();
+            visibility = "visible";
+          } else {
+            alert(`You must enter the name's of player-X & player-O.`)
+          }
       }
 
       return (
         <div>
-          <div id='board'>
-            <Board />
-          </div>
-          {hidedBoard()}
           <form className="mx-auto" style={{width: '400px'}} onSubmit={handleSubmit}>
             <div className="row">
               <input 
@@ -49,6 +49,9 @@ const Inputs = () => {
               {/* </NavLink> */}
             </div>
           </form>
+          <div id='board' style={{visibility:visibility}}>
+            <Game />
+          </div>
         </div>
       );
     }}
