@@ -3,16 +3,30 @@ import { NavLink } from 'react-router-dom';
 import {Consumer} from './Context';
 import Game from './Game';
 
+let playerDiv = '';
+
+const addPlayerDiv = (plyX, plyO) => (
+  <div>
+    <div style={{float:'left'}}>
+      <img className='squareIcon' src='images/1.png' alt='image of X' />
+      <span>{plyX}</span>
+    </div>
+    <div style={{float:'right'}}>
+      <img className='squareIcon' src='images/0.png' alt='image of O' />
+      <span>{plyO}</span>
+    </div>
+  </div>
+);
+
 const Inputs = () => {
 
   const playerX = React.createRef();
   const playerO = React.createRef();
-  let visibility = "hidden"
+  let visibility = "hidden";
 
   return(
     <Consumer>
     {context => {
-      let players = context.players;
       const handleSubmit = (e) => {
           e.preventDefault();
           const plyX = playerX.current.value;
@@ -21,6 +35,7 @@ const Inputs = () => {
             context.actions.addPlayer(plyX);
             context.actions.addPlayer(plyO);
             e.currentTarget.remove();
+            playerDiv = addPlayerDiv(plyX, plyO)
             visibility = "visible";
           } else {
             alert(`You must enter the name's of player-X & player-O.`)
@@ -51,7 +66,8 @@ const Inputs = () => {
             </div>
           </form>
           <div id='board' style={{visibility:visibility}}>
-            <Game players={players}/>
+            {playerDiv}
+            <Game />
           </div>
         </div>
       );

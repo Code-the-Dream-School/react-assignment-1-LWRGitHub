@@ -1,6 +1,12 @@
 import React, {Component}  from 'react';
 import ReactDOM from 'react-dom';
 import {Consumer} from './Context';
+import { NavLink } from 'react-router-dom';
+
+
+let winnerScreen = '';
+let winVisibility = 'hidden';
+let gameBoardVisibility = 'inherit';
 
 function Square(props){
   return (
@@ -8,6 +14,20 @@ function Square(props){
       <img className='square' src={props.value} />
     </button>
   );
+}
+
+const endScreen = (winner) => {
+  document.getElementById('gameBoard').remove();
+  document.getElementById('winnerScreen').style.visibility = "visible";
+
+  return(
+    <p>{winner} Wins!</p>
+  );
+}
+
+const newGameVisibility = () =>{
+  gameBoardVisibility = "visible";
+  winVisibility = "hidden";
 }
 
 class Board extends React.Component {
@@ -38,37 +58,51 @@ class Board extends React.Component {
     });
   }
 
+  CreateBoard(){
+    return(
+      <div id='gameBoard' style={{visibility:gameBoardVisibility,width: '250px'}} className="mx-auto status">
+        <div className="board-row">
+          {this.renderSquare(0)}
+          {this.renderSquare(1)}
+          {this.renderSquare(2)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(3)}
+          {this.renderSquare(4)}
+          {this.renderSquare(5)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(6)}
+          {this.renderSquare(7)}
+          {this.renderSquare(8)}
+        </div>
+      </div>
+    );
+  }
+  
+  newGame(ticTacToeBoard){
+    if(ticTacToeBoard){
+      ticTacToeBoard = this.CreateBoard()
+      newGameVisibility()
+    }
+  }
+
   render() {
     const winner = calculateWinner(this.state.squares, this.state.xIsNext);
-    let status;
     if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
+      winnerScreen = endScreen(winner)
+    } 
+    let ticTacToeBoard = this.CreateBoard();
 
     return (
         <div>
           
-          <div style={{width: '250px'}} className="mx-auto status">
-            <div className="status">{status}</div>
-            <div className="board-row">
-              {this.renderSquare(0)}
-              {this.renderSquare(1)}
-              {this.renderSquare(2)}
-            </div>
-            <div className="board-row">
-              {this.renderSquare(3)}
-              {this.renderSquare(4)}
-              {this.renderSquare(5)}
-            </div>
-            <div className="board-row">
-              {this.renderSquare(6)}
-              {this.renderSquare(7)}
-              {this.renderSquare(8)}
-            </div>
-          </div>
+            {ticTacToeBoard}
           
+          <div className='jumbotron' id='winnerScreen' style={{visibility:winVisibility,backgroundColor:'lightblue'}}>
+            {winnerScreen}
+          </div>
+          <button onClick={this.newGame(ticTacToeBoard)}>New Game</button>
         </div>
     );
   }
@@ -78,21 +112,11 @@ const Game = (props) => {
       return(
       // <Consumer>
         <div className="game">
-          <div style={{float:'left'}}>
-            <img className='squareIcon' src='images/1.png' alt='image of X' />
-            <span>{props.players[0].name}</span>
-          </div>
-          <div style={{float:'right'}}>
-            <img className='squareIcon' src='images/0.png' alt='image of O' />
-            <span>{props.players[1].name}</span>
-          </div>
-          <div className="game-board">
+          
+          <div  className="game-board">
             <Board />
           </div>
-          <div className="game-info">
-            <div>{/* status */}</div>
-            <ol>{/* TODO */}</ol>
-          </div>
+          
         </div>
       // </Consumer>
       );
