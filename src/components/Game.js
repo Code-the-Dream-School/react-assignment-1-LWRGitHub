@@ -102,7 +102,8 @@ class Board extends React.Component {
           <div className='jumbotron' id='winnerScreen' style={{visibility:winVisibility,backgroundColor:'lightblue'}}>
             {winnerScreen}
           </div>
-          <button onClick={this.newGame(ticTacToeBoard)}>New Game</button>
+          <NavLink style={{float:'left'}} className="btn btn-secondary" to="/wellcome">New Game</NavLink>
+          <button style={{float:'right'}} className="btn btn-secondary" onClick={this.newGame(ticTacToeBoard)}>Reset</button>
         </div>
     );
   }
