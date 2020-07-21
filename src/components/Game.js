@@ -16,15 +16,6 @@ function Square(props){
   );
 }
 
-const endScreen = (winner) => {
-  document.getElementById('gameBoard').remove();
-  document.getElementById('winnerScreen').style.visibility = "visible";
-
-  return(
-    <p>{winner} Wins!</p>
-  );
-}
-
 const newGameVisibility = () =>{
   gameBoardVisibility = "visible";
   winVisibility = "hidden";
@@ -57,53 +48,43 @@ class Board extends React.Component {
       xIsNext: !this.state.xIsNext
     });
   }
-
-  CreateBoard(){
-    return(
-      <div id='gameBoard' style={{visibility:gameBoardVisibility,width: '250px'}} className="mx-auto status">
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
-  }
   
-  newGame(ticTacToeBoard){
-    if(ticTacToeBoard){
-      ticTacToeBoard = this.CreateBoard()
-      newGameVisibility()
-    }
+  newGame = () => {
+    this.setState({ squares: Array(9).fill(null) });
   }
 
   render() {
     const winner = calculateWinner(this.state.squares, this.state.xIsNext);
-    if (winner) {
-      winnerScreen = endScreen(winner)
-    } 
-    let ticTacToeBoard = this.CreateBoard();
 
     return (
         <div>
-          
-            {ticTacToeBoard}
-          
-          <div className='jumbotron' id='winnerScreen' style={{visibility:winVisibility,backgroundColor:'lightblue'}}>
-            {winnerScreen}
-          </div>
+
+          {winner ?
+            <div className='jumbotron' id='winnerScreen' style={{backgroundColor:'lightblue'}}>
+              <p>{this.state.xIsNext ? 'X' : 'O'} Wins!</p>
+            </div>
+          :
+            <div id='gameBoard' style={{width: '250px'}} className="mx-auto status">
+              <div className="board-row">
+                {this.renderSquare(0)}
+                {this.renderSquare(1)}
+                {this.renderSquare(2)}
+              </div>
+              <div className="board-row">
+                {this.renderSquare(3)}
+                {this.renderSquare(4)}
+                {this.renderSquare(5)}
+              </div>
+              <div className="board-row">
+                {this.renderSquare(6)}
+                {this.renderSquare(7)}
+                {this.renderSquare(8)}
+              </div>
+            </div>
+          }
+
           <NavLink style={{float:'left'}} className="btn btn-secondary" to="/wellcome">New Game</NavLink>
-          <button style={{float:'right'}} className="btn btn-secondary" onClick={this.newGame(ticTacToeBoard)}>Reset</button>
+          <button style={{float:'right'}} className="btn btn-secondary" onClick={this.newGame}>Reset</button>
         </div>
     );
   }
@@ -138,10 +119,10 @@ function calculateWinner(squares, whosTurn) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return whosTurn ? 'true' : 'false';
+      return true
     }
   }
-  return null;
+  return false;
 }
 
 export default Game;
