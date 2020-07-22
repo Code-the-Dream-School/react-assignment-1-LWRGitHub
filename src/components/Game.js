@@ -68,12 +68,14 @@ class Board extends React.Component {
             <div id='gameBoard' style={{width: '250px'}} className="mx-auto status">
               
               {this.state.squares.map((element) => {
-                let row = <div className="board-row"></div>;
+                let row;
                 element.map((el2)=>{
                   row += this.renderSquare(el2);
                 })
                 return (
-                  row
+                  <div className="board-row">
+                    {row}
+                  </div>
                 )
               })}
               
