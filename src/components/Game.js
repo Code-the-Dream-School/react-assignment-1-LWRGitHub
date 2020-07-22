@@ -67,17 +67,13 @@ class Board extends React.Component {
           :
             <div id='gameBoard' style={{width: '250px'}} className="mx-auto status">
               
-              {this.state.squares.map((element) => {
-                let row;
-                element.map((el2)=>{
-                  row += this.renderSquare(el2);
-                })
-                return (
-                  <div className="board-row">
-                    {row}
-                  </div>
-                )
-              })}
+              {this.state.squares.map((row) => (
+                <div className="board-row">
+                  {row.map((square, index) => (
+                    <Square value={square} onClick={() => this.handleClick(index)} />
+                  ))}
+                </div>
+              ))}
               
             </div>
           }
