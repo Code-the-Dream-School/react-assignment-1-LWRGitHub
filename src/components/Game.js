@@ -71,10 +71,10 @@ class Board extends React.Component {
                 element.map((el2)=>{
                   let row = <div className="board-row"></div>;
                   return (
-                    row.innerHTML += this.renderSquare(el2);
+                    row.innerHTML += this.renderSquare(el2)
                   )
                 })
-              })}>
+              })}
               
             </div>
           }
