@@ -59,7 +59,7 @@ class Board extends React.Component {
 
     return (
         <div>
-
+          {console.log(winner)}
           {winner ?
             <div className='jumbotron' id='winnerScreen' style={{backgroundColor:'lightblue'}}>
               <p>{this.state.xIsNext ? 'X' : 'O'} Wins!</p>
@@ -70,7 +70,7 @@ class Board extends React.Component {
               {this.state.squares.map((row) => (
                 <div className="board-row">
                   {row.map((square, index) => (
-                    <Square value={square} onClick={() => this.handleClick(index)} />
+                    <Square value={square} onClickAction={() => this.handleClick(index)} />
                   ))}
                 </div>
               ))}
@@ -102,14 +102,14 @@ const Game = (props) => {
 
 function calculateWinner(squares, whosTurn) {
   const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
+    [[0,0], [0,1], [0,2]],
+    [[1,0], [1,1], [1,2]],
+    [[2,0], [2,1], [2,2]],
+    [[0,0], [1,0], [1,2]],
+    [[0,1], [1,1], [2,1]],
+    [[0,2], [1,2], [2,2]],
+    [[0,0], [1,1], [2,2]],
+    [[2,0], [1,1], [0,2]],
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
