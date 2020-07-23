@@ -11,7 +11,7 @@ let gameBoardVisibility = 'inherit';
 function Square(props){
   return (
     <button className="square" onClick={() => { props.onClickAction(); }}>
-      <img className='square' src={props.value} />
+      {props.value ? <img className='square' src={props.value} /> : null}
     </button>
   );
 }
@@ -50,7 +50,7 @@ class Board extends React.Component {
   }
   
   newGame = () => {
-    this.setState({ squares: Array(9).fill(null) });
+    this.setState({ squares: Array(3).fill(Array(3).fill(null)) });
   }
 
   render() {
@@ -112,7 +112,7 @@ function calculateWinner(squares, whosTurn) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    console.log(this.state.squares)
+    console.log(squares)
     if (squares[a[0]][a[1]] && squares[a[0]][a[1]] === squares[b[0]][b[1]] && squares[a[0]][a[1]]  === squares[c[0]][c[1]]) {
       return true
     }
