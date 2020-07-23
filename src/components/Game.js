@@ -39,9 +39,7 @@ class Board extends React.Component {
 
   handleClick(i, i2){
     const updatingSquares = JSON.parse(JSON.stringify(this.state.squares))
-    console.log(updatingSquares[i][i2]);
     if (calculateWinner(this.state.squares, updatingSquares) || updatingSquares[i][i2]) {
-      console.log("RETURNING")
       return;
     }
     updatingSquares[i][i2] = this.state.xIsNext ? "images/0.png" : "images/1.png";
@@ -114,7 +112,7 @@ function calculateWinner(squares, whosTurn) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    console.log(squares[a])
+    console.log(this.state.squares)
     if (squares[a[0]][a[1]] && squares[a[0]][a[1]] === squares[b[0]][b[1]] && squares[a[0]][a[1]]  === squares[c[0]][c[1]]) {
       return true
     }
