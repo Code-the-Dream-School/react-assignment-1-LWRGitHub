@@ -38,10 +38,8 @@ class Board extends React.Component {
   }
 
   handleClick(i, i2){
-    console.log(i, i2);
-    console.log(this.state.squares);
-    const updatingSquares = this.state.squares
-    console.log(updatingSquares);
+    const updatingSquares = JSON.parse(JSON.stringify(this.state.squares))
+    console.log(updatingSquares[i][i2]);
     if (calculateWinner(this.state.squares, updatingSquares) || updatingSquares[i][i2]) {
       console.log("RETURNING")
       return;
