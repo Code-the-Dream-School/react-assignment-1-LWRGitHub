@@ -37,12 +37,15 @@ class Board extends React.Component {
     />;
   }
 
-  handleClick(i){
-    const updatingSquares = this.state.squares.slice();
-    if (calculateWinner(updatingSquares) || updatingSquares[i]) {
+  handleClick(i, i2){
+    console.log(i, i2);
+    console.log(this.state.squares);
+    const updatingSquares = this.state.squares
+    console.log(updatingSquares);
+    if (calculateWinner(this.state.squares, updatingSquares) || updatingSquares) {
       return;
     }
-    updatingSquares[i] = this.state.xIsNext ? "images/0.png" : "images/1.png";
+    updatingSquares[i][i2] = this.state.xIsNext ? "images/0.png" : "images/1.png";
     this.setState({
       squares: updatingSquares,
       xIsNext: !this.state.xIsNext
@@ -59,7 +62,6 @@ class Board extends React.Component {
 
     return (
         <div>
-          {console.log(winner)}
           {winner ?
             <div className='jumbotron' id='winnerScreen' style={{backgroundColor:'lightblue'}}>
               <p>{this.state.xIsNext ? 'X' : 'O'} Wins!</p>
@@ -67,10 +69,10 @@ class Board extends React.Component {
           :
             <div id='gameBoard' style={{width: '250px'}} className="mx-auto status">
               
-              {this.state.squares.map((row) => (
+              {this.state.squares.map((row, rowIndex) => (
                 <div className="board-row">
                   {row.map((square, index) => (
-                    <Square value={square} onClickAction={() => this.handleClick(index)} />
+                    <Square value={square} onClickAction={() => this.handleClick(rowIndex,index)} />
                   ))}
                 </div>
               ))}
@@ -113,7 +115,8 @@ function calculateWinner(squares, whosTurn) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+    console.log(squares[a])
+    if (squares[a[0]][a[1]] && squares[a[0]][a[1]] === squares[b[0]][b[1]] && squares[a[0]][a[1]]  === squares[c[0]][c[1]]) {
       return true
     }
   }
