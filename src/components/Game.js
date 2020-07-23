@@ -42,7 +42,8 @@ class Board extends React.Component {
     console.log(this.state.squares);
     const updatingSquares = this.state.squares
     console.log(updatingSquares);
-    if (calculateWinner(this.state.squares, updatingSquares) || updatingSquares) {
+    if (calculateWinner(this.state.squares, updatingSquares) || updatingSquares[i][i2]) {
+      console.log("RETURNING")
       return;
     }
     updatingSquares[i][i2] = this.state.xIsNext ? "images/0.png" : "images/1.png";
