@@ -11,7 +11,7 @@ let gameBoardVisibility = 'inherit';
 function Square(props){
   return (
     <button className="square" onClick={() => { props.onClickAction(); }}>
-      {props.value ? <img className='square' src={props.value} /> : null}
+      {props.value ? <img className='squareIcon' src={props.value} /> : null}
     </button>
   );
 }
@@ -67,7 +67,7 @@ class Board extends React.Component {
             <div id='gameBoard' style={{width: '250px'}} className="mx-auto status">
               
               {this.state.squares.map((row, rowIndex) => (
-                <div className="board-row">
+                <div className="row">
                   {row.map((square, index) => (
                     <Square value={square} onClickAction={() => this.handleClick(rowIndex,index)} />
                   ))}
