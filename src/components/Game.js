@@ -58,10 +58,14 @@ class Board extends React.Component {
     let count = 0;
 
     return (
+      <Consumer>
+        {context => (
         <div>
+          {console.log(context)}
           {winner ?
             <div className='jumbotron' id='winnerScreen' style={{backgroundColor:'lightblue'}}>
-              <p>{this.state.xIsNext ? 'X' : 'O'} Wins!</p>
+              
+              <p class="center">{this.state.xIsNext ? `${context.players[0].name} Wins! With X.` : `${context.players[1].name} Wins! With O.`}</p>
             </div>
           :
             <div id='gameBoard' style={{width: '250px'}} className="mx-auto status">
@@ -80,6 +84,8 @@ class Board extends React.Component {
           <NavLink style={{float:'left'}} className="btn btn-secondary" to="/wellcome">New Game</NavLink>
           <button style={{float:'right'}} className="btn btn-secondary" onClick={this.newGame}>Reset</button>
         </div>
+        )}
+        </Consumer>
     );
   }
 }
@@ -112,7 +118,6 @@ function calculateWinner(squares, whosTurn) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    console.log(squares)
     if (squares[a[0]][a[1]] && squares[a[0]][a[1]] === squares[b[0]][b[1]] && squares[a[0]][a[1]]  === squares[c[0]][c[1]]) {
       return true
     }
